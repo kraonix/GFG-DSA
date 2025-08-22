@@ -1,0 +1,35 @@
+// class implemented
+/*
+struct Item{
+    int value;
+    int weight;
+};
+*/
+
+class Solution {
+  public:
+    double fractionalKnapsack(vector<int>& val, vector<int>& wt, int capacity) {
+        // code here
+        vector<pair<double, int>> a;
+        
+        for(int i = 0; i < wt.size(); i++){
+            a.push_back({(double)val[i]/wt[i], i});
+        }
+        
+        sort(a.begin(), a.end(), greater<pair<double, int>>());
+        
+        double total = 0;
+        for(int i = 0; i < val.size(); i++){
+            int index = a[i].second;
+            
+            if(capacity >= wt[index]){
+                total += val[index];
+                capacity -= wt[index];
+            }else{
+                total += a[i].first * capacity;
+                break;
+            }
+        }
+        return total;
+    }
+};
